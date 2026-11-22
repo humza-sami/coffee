@@ -15,16 +15,17 @@ release has no test showing it works.
   and are not quotas ([enforcement table](native-protocol.md#beans-supervision-and-the-resources-actually-enforced)).
 * `coffee prepare` (exits 3), Windows/macOS, resumable partial uploads, blob/job garbage collection.
 
-## Evidence that does not exist yet
+## What has and has not been tested
 
 * **No physical multi-device run**, no WAN or real-network failure test, no remote-host SSH/WireGuard/Tailscale run. The
   documented recipes follow the implemented flags only.
 * **No power-loss or disk-full test.** Durability checks use fault injection (`EIO` on `fsync`, injected delays), not real crashes.
 * **Benchmarks are local-process simulations.** Two Beans on one machine share one CPU package, memory bus and page cache; they are
   not two devices ([benchmarking](benchmarking.md)). No C++ vs Rust or other language performance winner is claimed.
-* **CI is configured, not run.** `.github/workflows/ci.yml` has never executed on a hosted runner as of this release. Only Ubuntu
-  26.04 (GCC 15.2, local) was exercised; Ubuntu 24.04 and other matrices are configured but unverified. A locally built binary is
-  not shown to run on older distributions (it links the build host's `libstdc++`/`libc`).
+* **Hosted source builds passed on Ubuntu 24.04 / GCC 14.** [CI run 44973542870](https://github.com/humza-sami/coffee/actions/runs/44973542870)
+  passed 11/11 tests in the normal build and 11/11 in the separate ASAN/UBSAN build. Local Ubuntu 26.04 / GCC 15.2 checks
+  also passed. This is source-build evidence, not proof that a binary built on one distribution runs on another: binaries
+  link the build host's `libstdc++`/`libc`. Physical-device and WAN testing remain unperformed.
 
 ## Known behaviours and gaps
 

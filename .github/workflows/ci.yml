@@ -1,4 +1,4 @@
-# Configured, NOT yet executed on a hosted runner at the time of the 0.1.0-alpha.1 release. Local verification: Ubuntu 26.04 (GCC 15.2).
+# Hosted Ubuntu 24.04 / GCC 14 run 44973542870 passed normal and ASAN/UBSAN tests (11/11 each).
 name: ci
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04]   # verified locally only with GCC 15.2 on Ubuntu 26.04; GCC 14 on 24.04 is unverified, treat a failure here as a finding
+        os: [ubuntu-24.04]   # source-build coverage; not binary portability evidence
     steps:
       - uses: actions/checkout@v4
       - name: Toolchain prerequisites
