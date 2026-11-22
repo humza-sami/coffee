@@ -25,6 +25,8 @@ Usage: coffee <command> [options]
 Local commands:
   init --state DIR [--json]     Create/verify a state directory (identity, token, database, artifacts)
   validate FILE [--json]        Parse and validate a workload YAML file, printing defaults with --json
+  resources [--path DIR] [--json] [--cpus N] [--memory-mb N] [--storage-mb N]
+                                Observe this host's CPU, RAM and disk and dry-run check a contribution (no allocation)
   plan FILE [--json]            Show dependency layers; with --server also check Bean capacity
 
 Coordinator and Beans:
@@ -162,6 +164,7 @@ int run_cli(const std::vector<std::string>& args, std::ostream& out, std::ostrea
     int net_status = 0;
     if (cli::run_net_command(cmd, rest, out, err, net_status)) return net_status;
   }
+  if (cmd == "resources") return cli::run_resources(rest, out, err);
   if (cmd == "init") return cmd_init(rest, out, err);
   if (cmd == "validate") return cmd_validate(rest, out, err);
   if (std::find(std::begin(kPlanned), std::end(kPlanned), cmd) != std::end(kPlanned)) {

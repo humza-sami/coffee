@@ -1,0 +1,34 @@
+# Algorithm Recipe, light size (schema coffee/v1alpha1): three independent one-CPU Steps; more Beans only let them run at the same time.
+# Light: brief; small enough for tests and a first try.
+# Every Bean needs python3 on its PATH. memory_mb is the Step's scheduling reservation and, in the current runtime, its address-space limit (RLIMIT_AS).
+# Validate: coffee validate examples/algorithms/coffee-light.yaml   Run: coffee brew examples/algorithms/coffee-light.yaml --wait --out ./results
+apiVersion: coffee/v1alpha1
+kind: Workload
+metadata:
+  name: algorithms-light
+spec:
+  tasks:
+    - id: matrix-multiply
+      command: ["python3", "matrix_multiply.py", "--size", "light", "--output", "result.json"]
+      inputs:
+        - {source: matrix_multiply.py, target: matrix_multiply.py}
+        - {source: algo_common.py, target: algo_common.py}
+      outputs: [result.json]
+      resources: {cpus: 1, memory_mb: 256}
+      timeout_seconds: 60
+    - id: merge-sort
+      command: ["python3", "merge_sort.py", "--size", "light", "--output", "result.json"]
+      inputs:
+        - {source: merge_sort.py, target: merge_sort.py}
+        - {source: algo_common.py, target: algo_common.py}
+      outputs: [result.json]
+      resources: {cpus: 1, memory_mb: 256}
+      timeout_seconds: 60
+    - id: tsp-exact
+      command: ["python3", "tsp_held_karp.py", "--size", "light", "--output", "result.json"]
+      inputs:
+        - {source: tsp_held_karp.py, target: tsp_held_karp.py}
+        - {source: algo_common.py, target: algo_common.py}
+      outputs: [result.json]
+      resources: {cpus: 1, memory_mb: 256}
+      timeout_seconds: 60

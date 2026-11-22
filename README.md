@@ -10,6 +10,8 @@ Imagine using the resources of your home laptop, your dad's laptop and an office
 
 ![Home Laptop, Dads Laptop and Office Server connected to one unified VM, with signals travelling both ways](docs/assets/coffee-terminal.gif)
 
+Try runnable [algorithm Recipes](examples/algorithms/README.md): matrix multiplication, merge sort and exact TSP in light, medium and heavy sizes (source builds).
+
 ## Terminology
 
 | Name | Meaning |
@@ -32,6 +34,7 @@ Replace `JOB` (a Brew ID), `TASK` (a Step ID), `BEAN` and paths with your own va
 | --- | --- |
 | `coffee init --state ./.coffee` | Create or check the Manager's state directory. |
 | `coffee validate coffee.yaml` | Check a Recipe before running it. |
+| `coffee resources` | Report this machine's CPU, RAM and disk and dry-run check a contribution (source builds; see [host resources](docs/host-resources.md)). |
 | `coffee plan coffee.yaml` | Show Step order and dependencies. Add `--server URL` to check Bean capacity. |
 | `coffee serve --state ./.coffee` | Start the Manager. |
 | `coffee join --work-dir ./.coffee-bean` | Connect this machine as a Bean. |

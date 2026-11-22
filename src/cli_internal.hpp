@@ -1,4 +1,4 @@
-// Internal: network-facing CLI commands (serve, join, beans, plan, brew, status, logs, explain, cancel, drain).
+// Internal: network-facing CLI commands (serve, join, beans, plan, brew, status, logs, explain, cancel, drain) and `resources`.
 #pragma once
 
 #include <iosfwd>
@@ -30,5 +30,8 @@ Options parse_options(const std::vector<std::string>& args, const std::set<std::
 
 // Returns true when `cmd` is one of the network commands and stores its exit status in `status`.
 bool run_net_command(const std::string& cmd, const std::vector<std::string>& args, std::ostream& out, std::ostream& err, int& status);
+
+// `coffee resources`: local host resource observation and dry-run contribution check. Returns the exit status.
+int run_resources(const std::vector<std::string>& args, std::ostream& out, std::ostream& err);
 
 }  // namespace coffee::cli

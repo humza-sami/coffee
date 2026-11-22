@@ -98,7 +98,7 @@ conflict rules; the whole DAG is validated before anything is stored. Normalized
 
 ## CLI
 
-`coffee init|validate` plus:
+`coffee init|validate|resources` plus:
 
 | Command | Key flags | Notes |
 | --- | --- | --- |
@@ -108,6 +108,7 @@ conflict rules; the whole DAG is validated before anything is stored. Normalized
 | `plan FILE` | `--json`, optional `--server` | layers, resources; with a server it flags tasks no Bean can ever fit |
 | `brew FILE` | `--job-id ID` `--wait` `--timeout S` `--out DIR` `--poll-ms` | uploads inputs (digest-verified), submits; `--wait` follows to the end; `--out` downloads verified accepted outputs |
 | `status [JOB]` / `logs JOB TASK [--attempt N] [--stderr]` / `explain JOB TASK` / `cancel JOB [--task T] [--reason R]` | connection flags | |
+| `resources` | `--path DIR` `--json` `--cpus` `--memory-mb` `--storage-mb` `--reserve-memory-mb` `--reserve-storage-mb` | local observation and dry-run check, no network; exit 0/1/2; see [host-resources.md](host-resources.md) (source builds; not in the tagged `beta-v0.1` binaries) |
 | `prepare` | | **not implemented**, exit 3 |
 
 Connection flags: `--server URL` (`$COFFEE_SERVER`, default `http://127.0.0.1:7077`), `--token-file FILE` (`$COFFEE_TOKEN_FILE`) or

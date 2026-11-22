@@ -5,7 +5,8 @@ add_executable(coffee_tests
   unit/test_cli.cpp
   unit/test_artifacts.cpp
   unit/test_executor.cpp
-  unit/test_workspace.cpp)
+  unit/test_workspace.cpp
+  unit/test_host_resources.cpp)
 target_link_libraries(coffee_tests PRIVATE coffee_core coffee_catch2)
 target_compile_definitions(coffee_tests PRIVATE COFFEE_TEST_SOURCE_DIR="${CMAKE_SOURCE_DIR}" COFFEE_BIN="$<TARGET_FILE:coffee>")
 add_dependencies(coffee_tests coffee)
@@ -18,13 +19,13 @@ add_test(NAME cli_smoke
 set(COFFEE_V1_FIXTURE_DIR "${CMAKE_SOURCE_DIR}/tests/integration/fixtures/v1" CACHE PATH "Checksum-verified genuine schema-v1 fixture directory")
 find_package(Python3 COMPONENTS Interpreter)
 if(Python3_Interpreter_FOUND)
-  foreach(_suite test_protocol test_cluster test_faults test_demo test_hardening test_quickstart test_upgrade)
+  foreach(_suite test_protocol test_cluster test_faults test_demo test_hardening test_quickstart test_upgrade test_resources test_examples)
     add_test(NAME integration_${_suite}
       COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tests/integration/${_suite}.py)
     set_tests_properties(integration_${_suite} PROPERTIES
       ENVIRONMENT "COFFEE_BIN=$<TARGET_FILE:coffee>;PYTHONPATH=${CMAKE_SOURCE_DIR}/tests/integration;COFFEE_V1_FIXTURE_DIR=${COFFEE_V1_FIXTURE_DIR}" TIMEOUT 600)
   endforeach()
-  foreach(_suite test_install test_install_safety)
+  foreach(_suite test_install test_install_safety test_examples_install)
     add_test(NAME integration_${_suite}
       COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tests/integration/${_suite}.py)
     set_tests_properties(integration_${_suite} PROPERTIES
