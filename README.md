@@ -4,8 +4,6 @@ Running an app across separate computers means choosing where it runs, moving fi
 **Coffee is being built to make those computers work as one virtual machine**, even across different locations.
 The goal is to combine their CPU, memory and storage, with Coffee handling the sharing underneath.
 
-Coffee is native C++20. Its runtime needs no AI service.
-
 ## Example
 
 Imagine using the resources of your home laptop, your dad's laptop and an office server through one machine.
