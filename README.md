@@ -11,7 +11,6 @@ Coffee is native C++20. Its runtime needs no AI service.
 ## Example
 
 Imagine using the resources of your home laptop, your dad's laptop and an office server through one machine.
-This is the goal Coffee is working toward. The hardware specs below are examples.
 
 ![Home Laptop, Dads Laptop and Office Server connected to one unified VM, with signals travelling both ways](docs/assets/coffee-terminal.gif)
 
