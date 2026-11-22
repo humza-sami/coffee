@@ -32,6 +32,7 @@ Replace `JOB` (a Brew ID), `TASK` (a Step ID), `BEAN` and paths with your own va
 | --- | --- |
 | `coffee init --state ./.coffee` | Create or check the Manager's state directory. |
 | `coffee validate coffee.yaml` | Check a Recipe before running it. |
+| `coffee resources` | Report this machine's CPU, RAM and disk and dry-run check a contribution (source builds; see [host resources](docs/host-resources.md)). |
 | `coffee plan coffee.yaml` | Show Step order and dependencies. Add `--server URL` to check Bean capacity. |
 | `coffee serve --state ./.coffee` | Start the Manager. |
 | `coffee join --work-dir ./.coffee-bean` | Connect this machine as a Bean. |

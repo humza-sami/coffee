@@ -27,8 +27,10 @@ add_library(coffee_core STATIC
   src/client.cpp
   src/worker.cpp
   src/worker_attempt.cpp
+  src/host_resources.cpp
   src/cli.cpp
-  src/cli_net.cpp)
+  src/cli_net.cpp
+  src/cli_resources.cpp)
 target_include_directories(coffee_core PUBLIC include)
 target_link_libraries(coffee_core PUBLIC coffee_third_party_json coffee_httplib coffee_sqlite yaml-cpp::yaml-cpp)
 target_compile_options(coffee_core PRIVATE -Wall -Wextra -Wpedantic -Wshadow)
