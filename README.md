@@ -105,5 +105,7 @@ Help me build and test Coffee. You can lend a Linux VPS, help fund development, 
 [Offer a server or discuss support](https://github.com/humza-sami/coffee/issues/new?template=support.md) ·
 [Start contributing](CONTRIBUTING.md).
 
+Email me at [humzasami20@gmail.com](mailto:humzasami20@gmail.com).
+
 *Available in Beta 1: task execution, pipelines, status, logs and retries. Each task runs on one Bean; a combined VM and
 pooled memory/storage are future work. [Limitations](docs/limitations.md) · [Security](SECURITY.md) · [Apache-2.0](LICENSE).*
