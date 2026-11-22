@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="430" viewBox="0 0 1500 430" role="img" shape-rendering="crispEdges" aria-labelledby="rm-title rm-desc">
+<title id="rm-title">Coffee roadmap</title>
+<desc id="rm-desc">Horizontal timeline of five milestones. beta-v0.1, task execution, is available. Planned: beta-v0.2 full CPU, RAM and storage clustering; beta-v0.3 desktop app. The v1.0 goal is the first stable release. GPU clustering is planned after v1.0. These are goals, not shipped capabilities or dated commitments.</desc>
+<defs><pattern id="grid" width="37.5" height="37.5" patternUnits="userSpaceOnUse"><path d="M37.5 0H0V37.5" fill="none" stroke="#181e14" stroke-width="1"/></pattern></defs>
+<rect width="1500" height="430" fill="#10150f"/>
+<rect width="1500" height="430" fill="url(#grid)"/>
+<g font-family="'DejaVu Sans Mono', 'Liberation Mono', 'Courier New', monospace" font-size="20">
+<text x="40" y="46" fill="#36d523" font-weight="bold" letter-spacing="2">COFFEE ROADMAP</text>
+<text x="1460" y="46" fill="#a1d496" text-anchor="end">Release milestones</text>
+<path d="M40 215H150" stroke="#36d523" stroke-width="4"/>
+<path d="M150 215H1436" stroke="#367a2b" stroke-width="4" stroke-dasharray="16 8"/>
+<path d="M1444 195h8v8h8v8h8v8h-8v8h-8v8h-8z" fill="#367a2b"/>
+<path d="M150 189V171" stroke="#36d523" stroke-width="4"/>
+<text x="150" y="93" fill="#74ec54" font-size="26" font-weight="bold" text-anchor="middle">beta-v0.1</text>
+<text x="150" y="127" fill="#b2f19b" font-size="22" text-anchor="middle">Task execution</text>
+<text x="150" y="157" fill="#59ff31" font-size="20" font-weight="bold" letter-spacing="2" text-anchor="middle">AVAILABLE</text>
+<rect x="126" y="191" width="48" height="48" fill="none" stroke="#367a2b" stroke-width="3"/><rect x="136" y="201" width="28" height="28" fill="#59ff31"/>
+<path d="M129 267h42v6h-42zM129 273h6v6h-6zM165 273h6v6h-6zM129 279h6v6h-6zM141 279h6v6h-6zM165 279h6v6h-6zM129 285h6v6h-6zM147 285h6v6h-6zM165 285h6v6h-6zM129 291h6v6h-6zM141 291h6v6h-6zM153 291h18v6h-18zM129 297h6v6h-6zM165 297h6v6h-6zM129 303h42v6h-42z" fill="#36d523"/>
+<path d="M450 241V259" stroke="#367a2b" stroke-width="4"/>
+<text x="450" y="285" fill="#36d523" font-size="26" font-weight="bold" text-anchor="middle">beta-v0.2</text>
+<text x="450" y="317" fill="#a1d496" font-size="22" text-anchor="middle">Full CPU, RAM and</text>
+<text x="450" y="345" fill="#a1d496" font-size="22" text-anchor="middle">storage clustering</text>
+<text x="450" y="377" fill="#a1d496" font-size="20" font-weight="bold" letter-spacing="2" text-anchor="middle">PLANNED</text>
+<rect x="437" y="202" width="26" height="26" fill="#10150f" stroke="#42902c" stroke-width="4"/>
+<path d="M435 121h6v6h-6zM447 121h6v6h-6zM459 121h6v6h-6zM429 127h42v6h-42zM435 133h6v6h-6zM459 133h6v6h-6zM429 139h12v6h-12zM447 139h6v6h-6zM459 139h12v6h-12zM435 145h6v6h-6zM459 145h6v6h-6zM429 151h42v6h-42zM435 157h6v6h-6zM447 157h6v6h-6zM459 157h6v6h-6z" fill="#42902c"/>
+<path d="M750 189V171" stroke="#367a2b" stroke-width="4"/>
+<text x="750" y="93" fill="#36d523" font-size="26" font-weight="bold" text-anchor="middle">beta-v0.3</text>
+<text x="750" y="127" fill="#a1d496" font-size="22" text-anchor="middle">Desktop app</text>
+<text x="750" y="157" fill="#a1d496" font-size="20" font-weight="bold" letter-spacing="2" text-anchor="middle">PLANNED</text>
+<rect x="737" y="202" width="26" height="26" fill="#10150f" stroke="#42902c" stroke-width="4"/>
+<path d="M729 267h42v6h-42zM729 273h42v6h-42zM729 279h6v6h-6zM765 279h6v6h-6zM729 285h6v6h-6zM741 285h18v6h-18zM765 285h6v6h-6zM729 291h6v6h-6zM765 291h6v6h-6zM729 297h6v6h-6zM741 297h18v6h-18zM765 297h6v6h-6zM729 303h42v6h-42z" fill="#42902c"/>
+<path d="M1050 241V259" stroke="#367a2b" stroke-width="4"/>
+<text x="1050" y="285" fill="#36d523" font-size="26" font-weight="bold" text-anchor="middle">v1.0</text>
+<text x="1050" y="317" fill="#a1d496" font-size="22" text-anchor="middle">First stable release</text>
+<text x="1050" y="349" fill="#a1d496" font-size="20" font-weight="bold" letter-spacing="2" text-anchor="middle">GOAL</text>
+<rect x="1037" y="202" width="26" height="26" fill="#10150f" stroke="#42902c" stroke-width="4" transform="rotate(45 1050 215)"/>
+<path d="M1029 121h42v6h-42zM1029 127h6v6h-6zM1065 127h6v6h-6zM1029 133h6v6h-6zM1059 133h12v6h-12zM1029 139h12v6h-12zM1053 139h6v6h-6zM1065 139h6v6h-6zM1029 145h6v6h-6zM1041 145h12v6h-12zM1065 145h6v6h-6zM1029 151h6v6h-6zM1047 151h6v6h-6zM1065 151h6v6h-6zM1029 157h42v6h-42z" fill="#42902c"/>
+<path d="M1350 189V171" stroke="#367a2b" stroke-width="4"/>
+<text x="1350" y="93" fill="#36d523" font-size="26" font-weight="bold" text-anchor="middle">After v1.0</text>
+<text x="1350" y="127" fill="#a1d496" font-size="22" text-anchor="middle">GPU clustering</text>
+<text x="1350" y="157" fill="#a1d496" font-size="20" font-weight="bold" letter-spacing="2" text-anchor="middle">PLANNED</text>
+<rect x="1337" y="202" width="26" height="26" fill="#10150f" stroke="#42902c" stroke-width="4"/>
+<path d="M1329 267h42v6h-42zM1329 273h6v6h-6zM1365 273h6v6h-6zM1329 279h6v6h-6zM1341 279h18v6h-18zM1365 279h6v6h-6zM1329 285h6v6h-6zM1341 285h6v6h-6zM1353 285h6v6h-6zM1365 285h6v6h-6zM1329 291h6v6h-6zM1341 291h18v6h-18zM1365 291h6v6h-6zM1329 297h6v6h-6zM1365 297h6v6h-6zM1329 303h6v6h-6zM1341 303h6v6h-6zM1353 303h6v6h-6zM1365 303h6v6h-6z" fill="#42902c"/>
+<g fill="#a1d496">
+<rect x="552" y="399" width="16" height="16" fill="#59ff31"/><text x="578" y="414">available</text>
+<rect x="743" y="400" width="14" height="14" fill="none" stroke="#42902c" stroke-width="3"/><text x="768" y="414">planned</text>
+<rect x="914" y="401" width="12" height="12" fill="none" stroke="#42902c" stroke-width="3" transform="rotate(45 920 407)"/><text x="938" y="414">goal</text>
+</g>
+</g>
+</svg>

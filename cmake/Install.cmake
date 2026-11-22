@@ -30,6 +30,7 @@ foreach(_f getting-started native-build native-protocol operations limitations b
 endforeach()
 _coffee_add("${CMAKE_SOURCE_DIR}/docs/releases/v${COFFEE_VERSION_FULL}.md" "${_doc}/docs/releases")
 _coffee_add("${CMAKE_SOURCE_DIR}/docs/assets/coffee-terminal.gif" "${_doc}/docs/assets")
+_coffee_add("${CMAKE_SOURCE_DIR}/docs/assets/coffee-roadmap.svg" "${_doc}/docs/assets")
 _coffee_add_tree("${CMAKE_SOURCE_DIR}/third_party/licenses" "${_doc}/licenses")
 _coffee_add_tree("${CMAKE_SOURCE_DIR}/examples" "share/coffee/examples")
 _coffee_add_tree("${CMAKE_SOURCE_DIR}/packaging/systemd-user" "share/coffee/systemd-user")
