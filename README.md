@@ -1,37 +1,56 @@
-<p align="center">
-  <img src="docs/assets/coffee-banner-v1.png" alt="COFFEE: three small coffee-bean shaped compute nodes joined by glowing paths into one larger bean constellation on a dark graphite background" width="100%">
-</p>
-
 # Coffee
 
-**Owner-controlled task scheduling across a few Linux machines you already own.** One coordinator, any number of *Beans*
-(worker processes on your office server, spare laptop or everyday machine), a durable job queue, verified file transfer and
-honest failure handling. Native C++20, no AI service and no cloud dependency at runtime.
+## What if your computers could become one?
 
-> **Status: `v0.1.0-alpha.1` (prerelease).** Everything below was exercised as *local processes on one Linux host*. No
-> multi-device, WAN or real power-loss measurements exist yet. See [what is not supported](docs/limitations.md).
+A laptop at home. Your dad's laptop. A server at the office.
+You already own the machines. **Coffee's goal is to bring their CPU, memory and storage together as one virtual machine**,
+even when they are in different places. Coffee would handle the resource sharing underneath.
 
-> ### Read this first: Coffee distributes tasks, it does not pool memory
-> Every task is an ordinary process that must **fit inside one Bean's budget**. Adding Beans adds *scheduling capacity*
-> (more tasks at once); it does **not** create a larger address space, a bigger "virtual machine", transparently
-> distributed threads or a pooled disk. A task that needs 40 GB of RAM cannot run on three 8 GB Beans, however much memory they
-> hold together; `coffee plan` and `coffee explain` say so instead of starting it (see [Placement failures](#when-a-task-does-not-fit)).
+**Today: an early alpha, not yet a unified VM.** Coffee can run tasks across participating machines, called **Beans**.
+Each task must fit on one Bean. Memory is not pooled yet.
 
-## What it does today
+![Coffee's vision: Home Laptop, Dads Laptop and Office Server connect to one unified VM, with signals moving in both directions](docs/assets/coffee-terminal.gif)
 
-| Works (tested with real processes on one host) | Does **not** exist |
-| --- | --- |
-| `coffee init/serve/join/beans/plan/brew/status/logs/explain/cancel/drain` | pooled RAM across machines, transparent threads, durable pooled disk |
-| Bearer-token API on loopback by default; SSH-tunnel / WireGuard / Tailscale recipes | built-in TLS/HTTPS (the token and data are plain HTTP on the wire) |
-| Durable SQLite state, leases, retries, cancel, coordinator restart | automatic coordinator failover / HA |
-| Digest-verified inputs/outputs, two-stage pipelines (`from_task`) | multi-tenant isolation or a sandbox: commands run as the Bean's user |
-| Timeouts, address-space limit, CPU pinning, per-attempt scratch cap, cleanup after a Bean is `SIGKILL`ed | hard memory/CPU/disk quotas (no cgroups) |
+*This illustration shows Coffee’s goal. Hardware specs are examples.*
+[View the still image](docs/assets/coffee-terminal.png).
 
-**Performance, honestly:** on one host, with eight ~1 s tasks and equal CPU budgets, Coffee was 30–53 % *slower* than plain pinned
-processes (fixed costs: hashing/fsyncing inputs, supervision, verified transfer); a second Bean helped only because it was given more CPUs. This is a
-local-process simulation, not a multi-device measurement: [docs/benchmarking.md](docs/benchmarking.md).
+[Try the alpha](#quickstart) · [Release](https://github.com/humza-sami/coffee/releases/tag/v0.1.0-alpha.1) · [Build checks](https://github.com/humza-sami/coffee/actions/runs/44973542870) · [Apache-2.0](LICENSE)
 
-## Quickstart (build from source, run a two-Bean demo)
+## The idea
+
+Use the computers you already have as one shared machine. A spare laptop could contribute memory. An office server could
+contribute CPU and storage. You would use the combined resources without choosing which computer holds each piece.
+That single-machine experience is the long-term vision; the current task runner is a first step.
+
+Coffee is native C++20. Its runtime needs no AI service.
+
+## What you can do today
+
+The `v0.1.0-alpha.1` prerelease gives you a coordinator and Bean workers. You can:
+
+- Send tasks to Beans with enough free capacity, and pass verified files between pipeline steps.
+- Follow status and logs, understand why a task is waiting, and cancel work.
+- Retry failed attempts and restart the coordinator using its saved state.
+
+More Beans let you run more tasks at once. One task still uses one Bean. Pooling CPU, memory and storage into one VM
+is future work. See the [current limits](docs/limitations.md).
+
+<details>
+<summary>Testing and performance</summary>
+
+**Tested so far:** local Ubuntu 26.04 process tests, plus [hosted Ubuntu 24.04 / GCC 14 CI](https://github.com/humza-sami/coffee/actions/runs/44973542870)
+with 11/11 tests passing in each of the normal and ASAN/UBSAN builds. Physical multi-device, WAN and real power-loss tests
+have not been run. These source-build results do not establish binary compatibility with other distributions.
+
+**Performance:** in the recorded one-host benchmark, Coffee took 30–53% longer than direct pinned processes at the same
+CPU budget for eight short tasks. That measures overhead, not multi-device performance or the future shared VM.
+[Read the benchmark and its limits](docs/benchmarking.md).
+
+</details>
+
+## Quickstart
+
+Build from source and try two Beans on one machine.
 
 Needs Ubuntu/Linux x86-64, `g++` with C++20, `python3` (with `venv`), `curl`, `tar`, `sha256sum` and network access once, to
 fetch pinned dependencies into `./.tools` (no sudo, nothing global; details in [docs/native-build.md](docs/native-build.md)).
@@ -44,6 +63,9 @@ export PATH="$PWD/.tools/venv/bin:$PATH"
 cmake -S . -B build -G Ninja && cmake --build build
 ctest --test-dir build --output-on-failure      # optional, about 2 minutes
 ```
+
+<details>
+<summary>Run a two-Bean demo</summary>
 
 Run a coordinator and two Beans on this machine, then a two-stage pipeline (`upper` → `stats`):
 
@@ -64,6 +86,8 @@ coffee status demo
 kill %1 %2 %3
 ```
 <!-- quickstart:end -->
+
+**Demo output**
 
 Real output of the commands above (Ubuntu 26.04, one machine; columns are tab-separated in the terminal, Bean names and order may vary; `status` prints the job summary a second time):
 
@@ -87,7 +111,10 @@ SECOND LINE OF INPUT
 `scripts/demo-local.sh` runs a larger self-checking demonstration (two Beans, retries, `kill -9` of a Bean mid-task,
 401/400 errors) and prints `DEMO PASSED` only if every assertion held.
 
-## When a task does not fit
+</details>
+
+<details>
+<summary>When a task does not fit</summary>
 
 ```sh
 coffee plan big.yaml          # a task with  resources: {cpus: 1, memory_mb: 40960}  on 2 GB Beans
@@ -102,6 +129,11 @@ Other failures are explained the same way: `coffee status JOB` shows every attem
 the captured stdout/stderr, `coffee explain` unmet dependencies or capacity. Exit codes: `0` ok, `1` job failed, `2` usage,
 `3` not implemented, `4` unreachable/unauthorized, `5` `--wait` timed out.
 
+</details>
+
+<details>
+<summary>Install or remove Coffee</summary>
+
 ## Install to a prefix of your choice
 
 ```sh
@@ -115,27 +147,28 @@ cmake --install build --prefix "$HOME/.local"      # or: scripts/install.sh --pr
   directories, Bean work directories and results are never touched. Empty directories are kept. `cpack -G TGZ` (in `build/`) makes a tarball.
 * Examples and `systemd --user` unit *templates* land in `share/coffee/`; Coffee never enables them for you.
 
+</details>
+
 ## Use more than one machine
 
-Coffee has no TLS yet, so encrypt the link yourself: an SSH tunnel (`ssh -N -L 7077:127.0.0.1:7077 user@coordinator`) or a
-WireGuard/Tailscale overlay. The coordinator stays on loopback unless you pass an explicit plaintext override, which adds **no**
-encryption. Complete recipes, token handling, drain/restart/recovery: [docs/operations.md](docs/operations.md).
+Use an SSH tunnel or an encrypted network such as WireGuard or Tailscale to connect your machines. Coffee has no built-in
+TLS yet. An SSH tunnel can use `ssh -N -L 7077:127.0.0.1:7077 user@coordinator`. The coordinator stays on loopback unless you
+pass an explicit plaintext override, which adds **no** encryption. Complete recipes, token handling, drain/restart/recovery: [docs/operations.md](docs/operations.md).
 
-## Documentation
+## Find your way around
 
-| Topic | Where |
-| --- | --- |
-| Build, state directory, workload schema | [docs/native-build.md](docs/native-build.md) |
-| HTTP routes, CLI flags, enforced limits | [docs/native-protocol.md](docs/native-protocol.md) |
-| Running, remote setup, install/remove, recovery | [docs/operations.md](docs/operations.md) |
-| What is and is not supported | [docs/limitations.md](docs/limitations.md) |
-| Local benchmark protocol and results | [docs/benchmarking.md](docs/benchmarking.md) |
-| Release notes | [docs/releases/v0.1.0-alpha.1.md](docs/releases/v0.1.0-alpha.1.md) |
-| Release verification | [docs/verification/release-verification.md](docs/verification/release-verification.md) |
-| Dependencies and licenses | [DEPENDENCIES.md](DEPENDENCIES.md), [NOTICE](NOTICE) |
+- [Build and workload format](docs/native-build.md) · [CLI and protocol](docs/native-protocol.md)
+- [Operations and recovery](docs/operations.md) · [Current limitations](docs/limitations.md)
+- [Release notes](docs/releases/v0.1.0-alpha.1.md) · [Release verification](docs/verification/release-verification.md)
 
-## Contributing, security, license
+## Help build the shared machine
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md) (please report vulnerabilities privately). Coffee is
-licensed under [Apache-2.0](LICENSE); third-party components keep their own licenses ([NOTICE](NOTICE)). The banner was generated
-for this project ([provenance](docs/assets/README.md)).
+Coffee is early. Try the local demo, tell us where it breaks, or help turn the shared-machine vision into small, testable
+steps. Useful contributions include clear bug reports, reproducible workloads, tests and improvements to the docs.
+[Start with the contribution guide](CONTRIBUTING.md).
+
+Please [report security issues privately](SECURITY.md). Coffee currently assumes trusted machines and a trusted owner;
+commands run as the Bean's user, without a sandbox. Remote links need an SSH tunnel or encrypted overlay.
+
+Coffee is licensed under [Apache-2.0](LICENSE). See [dependencies](DEPENDENCIES.md), [third-party notices](NOTICE) and
+[artwork provenance](docs/assets/README.md).
