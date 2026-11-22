@@ -10,6 +10,7 @@ endfunction()
 
 function(_coffee_add_tree srcdir reldir)
   file(GLOB_RECURSE _files RELATIVE "${srcdir}" CONFIGURE_DEPENDS "${srcdir}/*")
+  list(FILTER _files EXCLUDE REGEX "(^|/)__pycache__(/|$)|\\.pyc$")  # never install bytecode caches
   foreach(_f IN LISTS _files)
     get_filename_component(_sub "${_f}" DIRECTORY)
     set(_dest "${reldir}")
@@ -33,6 +34,22 @@ _coffee_add("${CMAKE_SOURCE_DIR}/docs/assets/coffee-terminal.gif" "${_doc}/docs/
 _coffee_add("${CMAKE_SOURCE_DIR}/docs/assets/coffee-roadmap.svg" "${_doc}/docs/assets")
 _coffee_add_tree("${CMAKE_SOURCE_DIR}/third_party/licenses" "${_doc}/licenses")
 _coffee_add_tree("${CMAKE_SOURCE_DIR}/examples" "share/coffee/examples")
+
+# The algorithm guide links to ../../docs/*.md, which is right in the source tree. Installed, the guide sits beside the scripts in
+# share/coffee/examples/algorithms while the documents are in share/doc/coffee/docs, and the root README links to
+# examples/algorithms/README.md below share/doc/coffee. So the guide is installed twice and no code is duplicated:
+#  * unchanged into share/doc/coffee/examples/algorithms, where both ../../docs/ and the root README link resolve, and
+#  * beside the scripts as a generated copy whose docs links point at ../../../doc/coffee/docs.
+# tests/integration/test_examples_install.py resolves every link of all three pages against the real installed files.
+set(_guide "${CMAKE_SOURCE_DIR}/examples/algorithms/README.md")
+list(FILTER _coffee_pairs EXCLUDE REGEX "/examples/algorithms/README\\.md\\|")
+file(READ "${_guide}" _guide_text)
+string(REPLACE "](../../docs/" "](../../../doc/coffee/docs/" _guide_text "${_guide_text}")
+set(_guide_installed "${CMAKE_BINARY_DIR}/install-docs/examples-algorithms/README.md")
+file(WRITE "${_guide_installed}" "${_guide_text}")
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${_guide}")  # regenerate the copy when the guide changes
+_coffee_add("${_guide_installed}" "share/coffee/examples/algorithms")
+_coffee_add("${_guide}" "${_doc}/examples/algorithms")
 _coffee_add_tree("${CMAKE_SOURCE_DIR}/packaging/systemd-user" "share/coffee/systemd-user")
 _coffee_add("${CMAKE_SOURCE_DIR}/scripts/uninstall.sh" "share/coffee")
 
