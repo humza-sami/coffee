@@ -1,7 +1,5 @@
 # What if your computers could become one?
 
-## Intro
-
 Running an app across separate computers means choosing where it runs, moving files and managing each machine.
 **Coffee is being built to make those computers work as one virtual machine**, even across different locations.
 The goal is to combine their CPU, memory and storage, with Coffee handling the sharing underneath.
