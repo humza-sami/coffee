@@ -13,7 +13,7 @@
 
 namespace coffee {
 
-inline constexpr const char* kVersion = "0.1.0-alpha.1";
+inline constexpr const char* kVersion = "0.1.0-beta.1";
 inline constexpr const char* kApiVersion = "coffee/v1alpha1";
 
 // Controlled error. `code` is a stable machine-readable token, e.g.

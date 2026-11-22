@@ -3,7 +3,7 @@
 #   systemctl --user daemon-reload && systemctl --user start coffee-bean
 # The token file is read by the Bean; do not put the token itself in a unit file or in the command line.
 [Unit]
-Description=Coffee Bean (alpha, example unit)
+Description=Coffee Bean (Beta 1, example unit)
 
 [Service]
 Type=simple

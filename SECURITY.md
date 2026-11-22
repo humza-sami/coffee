@@ -1,6 +1,6 @@
 # Security policy
 
-Coffee 0.1.0-alpha.1 is an **alpha** for a *trusted owner* running their own machines. Read [limitations](docs/limitations.md) first:
+Coffee 0.1.0-beta.1 is a **beta** for a *trusted owner* running their own machines. Read [limitations](docs/limitations.md) first:
 there is no TLS, one shared bearer token, no sandbox and no multi-tenant isolation. Those are known design limits, not vulnerabilities to
 report, but bugs that break the documented guarantees are.
 
@@ -9,7 +9,7 @@ report, but bugs that break the documented guarantees are.
 Please report privately and do **not** open a public issue with exploit details. Use GitHub's "Report a vulnerability" (private security
 advisory) on this repository once it is published, or contact the maintainers by the private address listed on the repository profile.
 Include the version (`coffee --version`), a minimal reproduction, expected vs actual behaviour and impact. Never include a real token.
-You can expect an acknowledgement; there is no bounty and no service-level guarantee for this alpha.
+You can expect an acknowledgement; there is no bounty and no service-level guarantee for this beta.
 
 ## In scope
 

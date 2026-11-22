@@ -1,4 +1,4 @@
-# Operating Coffee (alpha)
+# Operating Coffee (Beta 1)
 
 Everything here describes behaviour that exists in this build. Where something was **not** exercised it says so. All
 verification so far used processes on one Linux host over loopback; the remote recipes below follow the documented flags and
@@ -70,7 +70,7 @@ coffee drain BEAN            # no new claims; running attempts finish.  coffee d
 
 ## Remote machines: encrypted connectivity
 
-Coffee 0.1.0-alpha.1 has **no TLS**: the bearer token and artifact bytes are plain HTTP. The coordinator therefore binds
+Coffee 0.1.0-beta.1 has **no TLS**: the bearer token and artifact bytes are plain HTTP. The coordinator therefore binds
 `127.0.0.1` and refuses any other address unless you add `--allow-plaintext-nonloopback` (clients: `--allow-plaintext-remote`).
 **Those flags add no encryption**; they only record that you know the link is protected by something else.
 

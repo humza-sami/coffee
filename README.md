@@ -1,61 +1,58 @@
-# Coffee
+# What if your computers could become one?
 
-## What if your computers could become one?
+## Intro
 
-A laptop at home. Your dad's laptop. A server at the office.
-You already own the machines. **Coffee's goal is to bring their CPU, memory and storage together as one virtual machine**,
-even when they are in different places. Coffee would handle the resource sharing underneath.
-
-**Today: an early alpha, not yet a unified VM.** Coffee can run tasks across participating machines, called **Beans**.
-Each task must fit on one Bean. Memory is not pooled yet.
-
-![Coffee's vision: Home Laptop, Dads Laptop and Office Server connect to one unified VM, with signals moving in both directions](docs/assets/coffee-terminal.gif)
-
-*This illustration shows Coffee’s goal. Hardware specs are examples.*
-[View the still image](docs/assets/coffee-terminal.png).
-
-[Try the alpha](#quickstart) · [Release](https://github.com/humza-sami/coffee/releases/tag/v0.1.0-alpha.1) · [Build checks](https://github.com/humza-sami/coffee/actions/runs/44973542870) · [Apache-2.0](LICENSE)
-
-## The idea
-
-Use the computers you already have as one shared machine. A spare laptop could contribute memory. An office server could
-contribute CPU and storage. You would use the combined resources without choosing which computer holds each piece.
-That single-machine experience is the long-term vision; the current task runner is a first step.
+Running an app across separate computers means choosing where it runs, moving files and managing each machine.
+**Coffee is being built to make those computers work as one virtual machine**, even across different locations.
+The goal is to combine their CPU, memory and storage, with Coffee handling the sharing underneath.
 
 Coffee is native C++20. Its runtime needs no AI service.
 
-## What you can do today
+## Example
 
-The `v0.1.0-alpha.1` prerelease gives you a coordinator and Bean workers. You can:
+Imagine using the resources of your home laptop, your dad's laptop and an office server through one machine.
+This is the goal Coffee is working toward. The hardware specs below are examples.
 
-- Send tasks to Beans with enough free capacity, and pass verified files between pipeline steps.
-- Follow status and logs, understand why a task is waiting, and cancel work.
-- Retry failed attempts and restart the coordinator using its saved state.
+![Home Laptop, Dads Laptop and Office Server connected to one unified VM, with signals travelling both ways](docs/assets/coffee-terminal.gif)
 
-More Beans let you run more tasks at once. One task still uses one Bean. Pooling CPU, memory and storage into one VM
-is future work. See the [current limits](docs/limitations.md).
+## Terminology
+
+| Name | Meaning |
+| --- | --- |
+| Bean | A worker process on a machine, with a set CPU and memory budget. |
+| Coordinator | The process that keeps the job queue and sends tasks to Beans. |
+| Workload | A `coffee.yaml` file describing tasks, their needs and their dependencies. |
+| Task | One command to run, with inputs, outputs and resource needs. |
+| Job | One submitted run of a workload, including its tasks and attempts. |
+
+## Commands
+
+Client commands use `COFFEE_SERVER` and `COFFEE_TOKEN_FILE`, as shown in the demo below.
+Replace `JOB`, `TASK`, `BEAN` and paths with your own values.
+
+| Command | What it does |
+| --- | --- |
+| `coffee init --state ./.coffee` | Create or check the coordinator's state directory. |
+| `coffee validate coffee.yaml` | Check a workload file before running it. |
+| `coffee plan coffee.yaml` | Show task order and dependencies. Add `--server URL` to check Bean capacity. |
+| `coffee serve --state ./.coffee` | Start the coordinator. |
+| `coffee join --work-dir ./.coffee-bean` | Start a Bean. |
+| `coffee beans` | List Beans and their available resources. |
+| `coffee drain BEAN` | Stop sending new tasks to a Bean. Use `--undo` to resume. |
+| `coffee brew coffee.yaml --wait --out ./results` | Submit work, wait for it and download results. |
+| `coffee status` / `coffee status JOB` | List jobs or inspect one job. |
+| `coffee logs JOB TASK` | Read a task attempt's output. Use `--stderr` for errors. |
+| `coffee explain JOB TASK` | Explain why a task is waiting or cannot fit. |
+| `coffee cancel JOB` | Cancel a job. Add `--task TASK` to cancel a task and its dependent tasks. |
+| `coffee --help` / `coffee COMMAND --help` | Show command options. |
+| `coffee --version` | Show the installed version. |
 
 <details>
-<summary>Testing and performance</summary>
+<summary>Build Coffee and run a two-Bean demo</summary>
 
-**Tested so far:** local Ubuntu 26.04 process tests, plus [hosted Ubuntu 24.04 / GCC 14 CI](https://github.com/humza-sami/coffee/actions/runs/44973542870)
-with 11/11 tests passing in each of the normal and ASAN/UBSAN builds. Physical multi-device, WAN and real power-loss tests
-have not been run. These source-build results do not establish binary compatibility with other distributions.
-
-**Performance:** in the recorded one-host benchmark, Coffee took 30–53% longer than direct pinned processes at the same
-CPU budget for eight short tasks. That measures overhead, not multi-device performance or the future shared VM.
-[Read the benchmark and its limits](docs/benchmarking.md).
-
-</details>
-
-## Quickstart
-
-Build from source and try two Beans on one machine.
-
-Needs Ubuntu/Linux x86-64, `g++` with C++20, `python3` (with `venv`), `curl`, `tar`, `sha256sum` and network access once, to
-fetch pinned dependencies into `./.tools` (no sudo, nothing global; details in [docs/native-build.md](docs/native-build.md)).
-
-Clone or download this repository, enter its directory, then run:
+Needs Ubuntu/Linux x86-64, a C++20 compiler, Python 3 with `venv`, `curl`, `tar` and `sha256sum`.
+The bootstrap downloads pinned tools into this project; nothing is installed globally.
+[Build details](docs/native-build.md).
 
 ```sh
 scripts/bootstrap.sh
@@ -64,10 +61,7 @@ cmake -S . -B build -G Ninja && cmake --build build
 ctest --test-dir build --output-on-failure      # optional, about 2 minutes
 ```
 
-<details>
-<summary>Run a two-Bean demo</summary>
-
-Run a coordinator and two Beans on this machine, then a two-stage pipeline (`upper` → `stats`):
+Run a coordinator and two Beans on this machine, then a two-stage pipeline:
 
 <!-- quickstart:start -->
 ```sh
@@ -87,88 +81,30 @@ kill %1 %2 %3
 ```
 <!-- quickstart:end -->
 
-**Demo output**
-
-Real output of the commands above (Ubuntu 26.04, one machine; columns are tab-separated in the terminal, Bean names and order may vary; `status` prints the job summary a second time):
-
-```text
-ID      STATE   CPUS  MEMORY_MB  NAME
-bean-b  online  0/2   0/2048     bean-b
-bean-a  online  0/2   0/2048     bean-a
-job demo (pipeline-demo): succeeded
-  upper  succeeded  attempts 1/3
-      #1 on bean-b: succeeded
-  stats  succeeded  attempts 1/3
-      #1 on bean-a: succeeded
-outputs written to ./results
-34
-HELLO COFFEE
-SECOND LINE OF INPUT
-```
-
-`stats` consumed `upper`'s *accepted, digest-verified* output (`from_task`), possibly on a different Bean. The token stays in
-`./.coffee/token` (mode 0600) and is never printed. State is in `./.coffee`; delete it to start over.
-`scripts/demo-local.sh` runs a larger self-checking demonstration (two Beans, retries, `kill -9` of a Bean mid-task,
-401/400 errors) and prints `DEMO PASSED` only if every assertion held.
+See [the demo output, task limits and installation steps](docs/getting-started.md).
+For remote machines, use an SSH tunnel or an encrypted network; Coffee has no built-in TLS yet.
+[Operations guide](docs/operations.md) · [CLI and protocol](docs/native-protocol.md).
 
 </details>
 
-<details>
-<summary>When a task does not fit</summary>
+## Roadmap
 
-```sh
-coffee plan big.yaml          # a task with  resources: {cpus: 1, memory_mb: 40960}  on 2 GB Beans
-# huge  cpus=1 memory_mb=40960 timeout=300s max_attempts=3  [cannot be placed: no registered Bean has this capacity]
-coffee brew big.yaml --job-id big      # the job is accepted but stays pending; it never runs
-coffee explain big huge
-# big/huge: no registered Bean has enough capacity for this task's resources
-#   bean-b: does not fit; needs memory_mb 40960 but Bean capacity is 2048
-```
+- [x] Task foundation: execution, file pipelines, status, logs, retries and saved coordinator state.
+- [ ] Test on real devices and real networks.
+- [ ] Add built-in encrypted connections.
+- [ ] Develop pooled storage.
+- [ ] Research remote memory and shared CPU execution toward one unified VM.
+- [ ] Improve recovery and add coordinator failover.
+- [ ] Reach stable v1.0 when the shared-machine behaviour and its limits are ready.
 
-Other failures are explained the same way: `coffee status JOB` shows every attempt and its reason, `coffee logs JOB TASK`
-the captured stdout/stderr, `coffee explain` unmet dependencies or capacity. Exit codes: `0` ok, `1` job failed, `2` usage,
-`3` not implemented, `4` unreachable/unauthorized, `5` `--wait` timed out.
+Releases will use numbered betas—Beta 1, Beta 2 and onward—while this work develops.
+[Beta 1 notes](docs/releases/v0.1.0-beta.1.md) · [Contribute](CONTRIBUTING.md).
 
-</details>
+## Support Me
 
-<details>
-<summary>Install or remove Coffee</summary>
+Help me build and test Coffee. You can lend a Linux VPS, help fund development, or contribute code and tests.
+[Offer a server or discuss support](https://github.com/humza-sami/coffee/issues/new?template=support.md) ·
+[Start contributing](CONTRIBUTING.md).
 
-## Install to a prefix of your choice
-
-```sh
-cmake --install build --prefix "$HOME/.local"      # or: scripts/install.sh --prefix "$HOME/.local"
-"$HOME/.local/share/coffee/uninstall.sh" --prefix "$HOME/.local"
-```
-
-* No default prefix, no sudo, no system service. If `PREFIX/bin/coffee` (or any other target file) already exists and was not
-  installed by Coffee, installation **refuses before writing anything** and leaves it untouched.
-* A manifest with SHA-256 digests (`share/coffee/install-manifest.txt`) drives removal; edited files are kept, and your state
-  directories, Bean work directories and results are never touched. Empty directories are kept. `cpack -G TGZ` (in `build/`) makes a tarball.
-* Examples and `systemd --user` unit *templates* land in `share/coffee/`; Coffee never enables them for you.
-
-</details>
-
-## Use more than one machine
-
-Use an SSH tunnel or an encrypted network such as WireGuard or Tailscale to connect your machines. Coffee has no built-in
-TLS yet. An SSH tunnel can use `ssh -N -L 7077:127.0.0.1:7077 user@coordinator`. The coordinator stays on loopback unless you
-pass an explicit plaintext override, which adds **no** encryption. Complete recipes, token handling, drain/restart/recovery: [docs/operations.md](docs/operations.md).
-
-## Find your way around
-
-- [Build and workload format](docs/native-build.md) · [CLI and protocol](docs/native-protocol.md)
-- [Operations and recovery](docs/operations.md) · [Current limitations](docs/limitations.md)
-- [Release notes](docs/releases/v0.1.0-alpha.1.md) · [Release verification](docs/verification/release-verification.md)
-
-## Help build the shared machine
-
-Coffee is early. Try the local demo, tell us where it breaks, or help turn the shared-machine vision into small, testable
-steps. Useful contributions include clear bug reports, reproducible workloads, tests and improvements to the docs.
-[Start with the contribution guide](CONTRIBUTING.md).
-
-Please [report security issues privately](SECURITY.md). Coffee currently assumes trusted machines and a trusted owner;
-commands run as the Bean's user, without a sandbox. Remote links need an SSH tunnel or encrypted overlay.
-
-Coffee is licensed under [Apache-2.0](LICENSE). See [dependencies](DEPENDENCIES.md), [third-party notices](NOTICE) and
-[artwork provenance](docs/assets/README.md).
+*Available in Beta 1: task execution, pipelines, status, logs and retries. Each task runs on one Bean; a combined VM and
+pooled memory/storage are future work. [Limitations](docs/limitations.md) · [Security](SECURITY.md) · [Apache-2.0](LICENSE).*
