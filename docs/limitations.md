@@ -1,4 +1,4 @@
-# Limitations of Coffee 0.1.0-alpha.1
+# Limitations of Coffee 0.1.0-beta.1
 
 This list is deliberately plain. "Unsupported" means there is no code and no evidence; "untested" means code exists but this
 release has no test showing it works.

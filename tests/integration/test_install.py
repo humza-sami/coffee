@@ -14,7 +14,7 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 BUILD = os.path.abspath(os.environ.get("COFFEE_BUILD_DIR") or os.path.join(ROOT, "build"))
 CMAKE = os.environ.get("COFFEE_CMAKE") or shutil.which("cmake") or os.path.join(ROOT, ".tools", "venv", "bin", "cmake")
 CPACK = os.path.join(os.path.dirname(CMAKE), "cpack")
-VERSION = "0.1.0-alpha.1"
+VERSION = "0.1.0-beta.1"
 UNINSTALL = os.path.join(ROOT, "scripts", "uninstall.sh")
 
 

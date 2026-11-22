@@ -3,7 +3,7 @@
 # Edit the paths, then:  systemctl --user daemon-reload && systemctl --user start coffee-coordinator
 # Default bind is loopback. For other machines use an SSH tunnel or an overlay network (docs/operations.md); there is no TLS.
 [Unit]
-Description=Coffee coordinator (alpha, example unit)
+Description=Coffee coordinator (Beta 1, example unit)
 
 [Service]
 Type=simple

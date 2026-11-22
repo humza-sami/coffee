@@ -1,6 +1,6 @@
 # Contributing to Coffee
 
-Coffee is an alpha, native C++20 runtime. Contributions that keep its claims honest are the most valuable ones.
+Coffee is a beta, native C++20 runtime. Contributions that keep its claims honest are the most valuable ones.
 
 ## Ground rules
 

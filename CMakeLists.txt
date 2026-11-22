@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.25)
 project(coffee VERSION 0.1.0 LANGUAGES C CXX)
-set(COFFEE_VERSION_SUFFIX "-alpha.1")  # first public release is a prerelease; keep equal to kVersion in include/coffee/util.hpp
+set(COFFEE_VERSION_SUFFIX "-beta.1")  # numbered beta prerelease; keep equal to kVersion in include/coffee/util.hpp
 set(COFFEE_VERSION_FULL "${PROJECT_VERSION}${COFFEE_VERSION_SUFFIX}")
 
 set(CMAKE_CXX_STANDARD 20)

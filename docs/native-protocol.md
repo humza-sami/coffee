@@ -1,6 +1,6 @@
-# Coffee native protocol, CLI and enforcement reference (alpha, `coffee/v1alpha1`)
+# Coffee native protocol, CLI and enforcement reference (Beta 1, `coffee/v1alpha1`)
 
-Everything here describes Coffee 0.1.0-alpha.1. All demonstrations so far are **local-process
+Everything here describes Coffee 0.1.0-beta.1. All demonstrations so far are **local-process
 simulations on one machine over loopback**; nothing here is a multi-machine measurement.
 
 ## Transport and security

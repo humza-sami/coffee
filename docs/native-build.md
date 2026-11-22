@@ -23,7 +23,7 @@ no existing `coffee` command is overwritten. To install into a prefix you choose
 ```sh
 cmake --install build --prefix "$HOME/.local"     # refuses to overwrite files Coffee did not install; writes share/coffee/install-manifest.txt
 "$HOME/.local/share/coffee/uninstall.sh" --prefix "$HOME/.local"
-(cd build && cpack -G TGZ)                         # coffee-0.1.0-alpha.1-Linux-x86_64.tar.gz
+(cd build && cpack -G TGZ)                         # coffee-0.1.0-beta.1-Linux-x86_64.tar.gz
 # correctness under sanitizers: a SEPARATE build directory, never used for timing
 cmake -S . -B build-asan -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" \
       -DCMAKE_C_FLAGS="-fsanitize=address,undefined" -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"

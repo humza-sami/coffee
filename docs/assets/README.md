@@ -7,7 +7,7 @@ companion. The lettering, machine icons, grid and connecting wires are original 
 screenshot. The animation loops in 2.8 seconds at 25 frames per second.
 
 The three machines and their hardware specs illustrate the long-term goal of one unified VM. The numbers are examples,
-not measured hardware or resources currently pooled by Coffee. The current alpha runs tasks on individual Beans.
+not measured hardware or resources currently pooled by Coffee. The current beta runs tasks on individual Beans.
 
 Supporting text was rendered with DejaVu Sans Mono. These assets contain rendered pixels; no font file is distributed
 with them.
