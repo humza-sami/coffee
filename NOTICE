@@ -1,0 +1,16 @@
+Coffee
+Copyright 2026 Coffee contributors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The Coffee binary statically links the third-party components below. Each keeps its own license; the full texts are
+installed under share/doc/coffee/licenses/ and live in third_party/licenses/ in the source tree.
+
+  SQLite 3.54.1        public domain                     (third_party/licenses/SQLite.NOTICE)
+  yaml-cpp 0.9.0       MIT                               (third_party/licenses/yaml-cpp.LICENSE)
+  nlohmann/json 3.12.0 MIT                               (third_party/licenses/nlohmann-json.LICENSE)
+  cpp-httplib 0.67.0   MIT                               (third_party/licenses/cpp-httplib.LICENSE)
+
+Catch2 3.16.1 (BSL-1.0) is used only to build the unit tests and is not part of the shipped binary.
+The Apache-2.0 license applies to Coffee's own source; it makes no claim about third-party code or about the research
+documents' cited papers. The README banner (docs/assets/coffee-banner-v1.png) was generated for this project; see docs/assets/README.md.

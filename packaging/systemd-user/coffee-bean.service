@@ -1,0 +1,18 @@
+# EXAMPLE user unit for a Coffee Bean. Coffee never installs or enables this file.
+# Copy it yourself to ~/.config/systemd/user/, edit server, CPU and memory budget, then
+#   systemctl --user daemon-reload && systemctl --user start coffee-bean
+# The token file is read by the Bean; do not put the token itself in a unit file or in the command line.
+[Unit]
+Description=Coffee Bean (alpha, example unit)
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/coffee join --server http://127.0.0.1:7077 --token-file %h/.config/coffee/token --work-dir %h/.local/state/coffee-bean --id %H --cpus 2 --memory-mb 2048
+# SIGTERM cancels running commands and returns their attempts to the coordinator as retryable failures.
+Restart=on-failure
+RestartSec=2
+# Kill the whole control group so a supervisor that was killed cannot leave orphaned commands behind.
+KillMode=control-group
+
+[Install]
+WantedBy=default.target

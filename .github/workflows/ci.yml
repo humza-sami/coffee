@@ -1,0 +1,58 @@
+# Configured, NOT yet executed on a hosted runner at the time of the 0.1.0-alpha.1 release. Local verification: Ubuntu 26.04 (GCC 15.2).
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  CC: gcc-14
+  CXX: g++-14
+jobs:
+  build-test:
+    name: build + test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04]   # verified locally only with GCC 15.2 on Ubuntu 26.04; GCC 14 on 24.04 is unverified, treat a failure here as a finding
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain prerequisites
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends g++-14 python3-venv curl tar coreutils perl
+      - name: Bootstrap pinned dependencies (project-local, checksummed)
+        run: scripts/bootstrap.sh
+      - name: Configure and build (RelWithDebInfo)
+        run: |
+          export PATH="$PWD/.tools/venv/bin:$PATH"
+          cmake -S . -B build -G Ninja
+          cmake --build build
+      - name: Unit, CLI, protocol, cluster, fault, demo, hardening, quickstart, bundled upgrade and install tests
+        run: |
+          export PATH="$PWD/.tools/venv/bin:$PATH"
+          ctest --test-dir build --output-on-failure --timeout 600
+      - name: Package (tarball)
+        run: |
+          export PATH="$PWD/.tools/venv/bin:$PATH"
+          (cd build && cpack -G TGZ)
+  sanitizers:
+    name: ASAN + UBSAN (separate build, correctness only)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends g++-14 python3-venv curl tar coreutils perl
+      - run: scripts/bootstrap.sh
+      - name: Build and test with sanitizers
+        run: |
+          export PATH="$PWD/.tools/venv/bin:$PATH"
+          cmake -S . -B build-asan -G Ninja -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" -DCMAKE_C_FLAGS="-fsanitize=address,undefined" \
+            -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"
+          cmake --build build-asan
+          ctest --test-dir build-asan --output-on-failure --timeout 900

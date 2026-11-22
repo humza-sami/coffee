@@ -1,0 +1,143 @@
+{
+  "cluster_id": "cluster-ab45d05b1db8820a",
+  "legacy-cancelled": {
+    "cancel_reason": "cancelled before upgrade",
+    "created_at_ms": 1795309427521,
+    "finished_at_ms": 1795309427521,
+    "id": "legacy-cancelled",
+    "name": "word-count-demo",
+    "state": "cancelled",
+    "tasks": [
+      {
+        "accepted_attempt": null,
+        "attempts": [],
+        "attempts_used": 0,
+        "depends_on": [],
+        "failure_reason": "cancelled before upgrade",
+        "id": "count-1",
+        "max_attempts": 3,
+        "resources": {
+          "cpus": 1,
+          "memory_mb": 128
+        },
+        "result": null,
+        "state": "cancelled",
+        "timeout_seconds": 60
+      },
+      {
+        "accepted_attempt": null,
+        "attempts": [],
+        "attempts_used": 0,
+        "depends_on": [],
+        "failure_reason": "cancelled before upgrade",
+        "id": "count-2",
+        "max_attempts": 2,
+        "resources": {
+          "cpus": 1,
+          "memory_mb": 128
+        },
+        "result": null,
+        "state": "cancelled",
+        "timeout_seconds": 300
+      },
+      {
+        "accepted_attempt": null,
+        "attempts": [],
+        "attempts_used": 0,
+        "depends_on": [
+          "count-1",
+          "count-2"
+        ],
+        "failure_reason": "cancelled before upgrade",
+        "id": "summary",
+        "max_attempts": 3,
+        "resources": {
+          "cpus": 1,
+          "memory_mb": 256
+        },
+        "result": null,
+        "state": "cancelled",
+        "timeout_seconds": 300
+      }
+    ]
+  },
+  "legacy-job": {
+    "cancel_reason": null,
+    "created_at_ms": 1795309427521,
+    "finished_at_ms": null,
+    "id": "legacy-job",
+    "name": "word-count-demo",
+    "state": "running",
+    "tasks": [
+      {
+        "accepted_attempt": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "bean_id": "legacy-bean",
+            "claimed_at_ms": 1795309427522,
+            "deadline_at_ms": 1795309517522,
+            "exit_code": 0,
+            "finished_at_ms": 1795309427522,
+            "lease_expires_at_ms": 1795309437522,
+            "reason": null,
+            "state": "succeeded"
+          }
+        ],
+        "attempts_used": 1,
+        "depends_on": [],
+        "failure_reason": null,
+        "id": "count-1",
+        "max_attempts": 3,
+        "resources": {
+          "cpus": 1,
+          "memory_mb": 128
+        },
+        "result": [
+          {
+            "path": "count.txt",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "size": 3
+          }
+        ],
+        "state": "succeeded",
+        "timeout_seconds": 60
+      },
+      {
+        "accepted_attempt": null,
+        "attempts": [],
+        "attempts_used": 0,
+        "depends_on": [],
+        "failure_reason": null,
+        "id": "count-2",
+        "max_attempts": 2,
+        "resources": {
+          "cpus": 1,
+          "memory_mb": 128
+        },
+        "result": null,
+        "state": "pending",
+        "timeout_seconds": 300
+      },
+      {
+        "accepted_attempt": null,
+        "attempts": [],
+        "attempts_used": 0,
+        "depends_on": [
+          "count-1",
+          "count-2"
+        ],
+        "failure_reason": null,
+        "id": "summary",
+        "max_attempts": 3,
+        "resources": {
+          "cpus": 1,
+          "memory_mb": 256
+        },
+        "result": null,
+        "state": "pending",
+        "timeout_seconds": 300
+      }
+    ]
+  }
+}

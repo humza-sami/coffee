@@ -1,0 +1,22 @@
+# Two-step pipeline with a dependency output (schema coffee/v1alpha1).
+# `stats` consumes `upper`'s accepted, digest-verified output through {from_task, output, target}.
+# Run:  coffee brew examples/pipeline/coffee.yaml --wait --out ./results   (see docs/native-protocol.md)
+apiVersion: coffee/v1alpha1
+kind: Workload
+metadata:
+  name: pipeline-demo
+spec:
+  tasks:
+    - id: upper
+      command: ["sh", "-c", "tr a-z A-Z < in.txt > up.txt"]
+      inputs:
+        - {source: data/in.txt, target: in.txt}
+      outputs: [up.txt]
+      resources: {cpus: 1, memory_mb: 128}
+    - id: stats
+      command: ["sh", "-c", "wc -c < data/up.txt > size.txt; cat data/up.txt >> size.txt"]
+      depends_on: [upper]               # required: the producer must be listed explicitly
+      inputs:
+        - {from_task: upper, output: up.txt, target: data/up.txt}
+      outputs: [size.txt]
+      resources: {cpus: 1, memory_mb: 128}

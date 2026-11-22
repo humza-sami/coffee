@@ -1,0 +1,26 @@
+# Example Coffee workload (schema coffee/v1alpha1). Validate with: coffee validate examples/coffee.yaml
+apiVersion: coffee/v1alpha1
+kind: Workload
+metadata:
+  name: word-count-demo
+spec:
+  tasks:
+    - id: count-1
+      command: ["sh", "-c", "wc -w < part.txt > count.txt"]   # argv; a shell runs only because it is spelled out here
+      inputs:
+        - source: data/part-1.txt      # relative to this file
+          target: part.txt             # relative to the attempt directory
+      outputs: [count.txt]
+      resources: {cpus: 1, memory_mb: 128}
+      timeout_seconds: 60
+    - id: count-2
+      command: ["sh", "-c", "wc -w < part.txt > count.txt"]
+      inputs:
+        - {source: data/part-2.txt, target: part.txt}
+      outputs: [count.txt]
+      resources: {cpus: 1, memory_mb: 128}
+      max_attempts: 2
+    - id: summary
+      command: ["sh", "-c", "echo summary-complete > summary.txt"]
+      depends_on: [count-1, count-2]
+      outputs: [summary.txt]

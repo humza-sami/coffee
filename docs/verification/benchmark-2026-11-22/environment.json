@@ -1,0 +1,148 @@
+{
+  "git_head": "6424c5b8b0d9057a3b14c34ebfb2f5ba914ef353",
+  "git_dirty_files": 0,
+  "coffee_version": "coffee 0.1.0-alpha.1 (api coffee/v1alpha1)",
+  "cmake_cache": {
+    "CMAKE_BUILD_TYPE": "Release",
+    "CMAKE_CXX_COMPILER": "/usr/bin/c++",
+    "CMAKE_CXX_FLAGS": "",
+    "CMAKE_CXX_FLAGS_RELEASE": "-O3 -DNDEBUG",
+    "CMAKE_C_FLAGS_RELEASE": "-O3 -DNDEBUG"
+  },
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "kernel": "7.0.0-43-generic",
+  "machine": "x86_64",
+  "python": "3.14.4",
+  "cpu_model": "12th Gen Intel(R) Core(TM) i5-12450H",
+  "logical_cpus": 12,
+  "initial_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "mem_total_kb": 31991700,
+  "mem_available_kb_at_start": 14958480,
+  "task_cpus": [
+    8,
+    9,
+    10,
+    11
+  ],
+  "aux_cpu": 4,
+  "cpu_topology": {
+    "8": "8",
+    "9": "9",
+    "10": "10",
+    "11": "11",
+    "4": "4-5"
+  },
+  "governors": {
+    "8": "powersave",
+    "9": "powersave",
+    "10": "powersave",
+    "11": "powersave"
+  },
+  "cgroup_chain": [
+    {
+      "path": "/user.slice/user-UID.slice/user@UID.service/app.slice/app-org.chromium.Chromium-PID.scope",
+      "cpu.max": null,
+      "memory.max": "max",
+      "memory.high": "max",
+      "cpuset.cpus.effective": null,
+      "pids.max": "37382"
+    },
+    {
+      "path": "/user.slice/user-UID.slice/user@UID.service/app.slice",
+      "cpu.max": "max 100000",
+      "memory.max": "max",
+      "memory.high": "max",
+      "cpuset.cpus.effective": null,
+      "pids.max": "max"
+    },
+    {
+      "path": "/user.slice/user-UID.slice/user@UID.service",
+      "cpu.max": "max 100000",
+      "memory.max": "max",
+      "memory.high": "max",
+      "cpuset.cpus.effective": null,
+      "pids.max": "max"
+    },
+    {
+      "path": "/user.slice/user-UID.slice",
+      "cpu.max": "max 100000",
+      "memory.max": "max",
+      "memory.high": "max",
+      "cpuset.cpus.effective": null,
+      "pids.max": "82241"
+    },
+    {
+      "path": "/user.slice",
+      "cpu.max": "max 100000",
+      "memory.max": "max",
+      "memory.high": "max",
+      "cpuset.cpus.effective": "0-11",
+      "pids.max": "max"
+    },
+    {
+      "path": "/",
+      "cpu.max": null,
+      "memory.max": null,
+      "memory.high": null,
+      "cpuset.cpus.effective": "0-11",
+      "pids.max": null
+    }
+  ],
+  "loadavg_at_start": "3.19 3.85 3.48 3/2613 2016063",
+  "workload": {
+    "tasks": 8,
+    "rounds": 280,
+    "input_bytes_each": 4194304,
+    "seed": 20261122
+  },
+  "limits": {
+    "memory_mb_per_task": 128,
+    "bean_poll_ms": 50,
+    "brew_poll_ms": 50
+  },
+  "configs": [
+    "direct-1cpu",
+    "coffee-1bean-x1slot",
+    "direct-2cpu",
+    "coffee-1bean-x2slot",
+    "coffee-2bean-x1slot",
+    "direct-4cpu",
+    "coffee-2bean-x2slot"
+  ],
+  "start_time": "2026-11-22T05:21:59+0500",
+  "input_sha256": [
+    "e1c692f0bdf2b8257c28c6a14af2116ac1eaee5749e0a5d63748b28d2f611c2a",
+    "a0afe527ac15be5ca1a2e00328a99a5ad36d349b14788998adb3f3a637c6bd67",
+    "54049c1e380a197d1c60759d0d138054cc189f4822e87da7e6decd4e2dba154c",
+    "481b640ee39c41187e20b47efbbc44eea6d6389d8d05b877c0ac894aef895391",
+    "471b3d0f63e276f25b60e311afee7fb08f5b38bb87ab22eaf75d6d8491c1cefd",
+    "73aaa01aaaf670c17cd898bc610fd6fb4f888b6ec84ffde2aa819decaeceb516",
+    "8f35638a9d2db952424f92e783e8d09c53614172a3851d2b0baae37cb5a452e5",
+    "e3f9fd58dcfdd76b9a56be99a43c4849957fa550a6b64c2e58ea32a139684f96"
+  ],
+  "reference_output_sha256": {
+    "t0": "ba5683c83e5d92ab71f89964edcd1fec8a708bb03885fb3bace60e8463256d2d",
+    "t1": "1694dfad0698497fbdd4fc1f1d2fa7fb8b3601bcac40ee964b4d4a7d9efce58e",
+    "t2": "9bf06b4258c6ddba1306d637bced38f9d2b670172022ea9619551d0d023a157d",
+    "t3": "d65d46bd7834fdec77c6b535607ea22b3c8ca09af8aee3ce69300a035f98f1fb",
+    "t4": "2d84c1fa1f2b05e37ea6828ae6bdf888dbd755dd639438b498e1e4fcd143d8dc",
+    "t5": "0fda09cc381c5a0cc537fc9d5045c31ff0cd687f0541b09f380fda4dd4ddd51a",
+    "t6": "13bc092ce7d00ab61e251c615af21c5659cdeeec4128e8bafcfa9f3536935234",
+    "t7": "136abcb79bf13f118a645e89632673e7a6fc8974b6f80b090a0b352e8e86ec7a"
+  },
+  "end_time": "2026-11-22T05:27:06+0500",
+  "loadavg_at_end": "4.52 4.41 3.82 2/2659 2020155"
+}

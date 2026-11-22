@@ -1,0 +1,8 @@
+build*/
+.tools/
+.worktrees/
+.superpowers/
+.coffee/
+__pycache__/
+*.pyc
+*.log

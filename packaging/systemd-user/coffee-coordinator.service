@@ -1,0 +1,18 @@
+# EXAMPLE user unit for a Coffee coordinator. Coffee never installs or enables this file.
+# Copy it yourself:  mkdir -p ~/.config/systemd/user && cp coffee-coordinator.service ~/.config/systemd/user/
+# Edit the paths, then:  systemctl --user daemon-reload && systemctl --user start coffee-coordinator
+# Default bind is loopback. For other machines use an SSH tunnel or an overlay network (docs/operations.md); there is no TLS.
+[Unit]
+Description=Coffee coordinator (alpha, example unit)
+
+[Service]
+Type=simple
+# Adjust to your install prefix and state directory (created once with: coffee init --state %h/.local/state/coffee)
+ExecStart=%h/.local/bin/coffee serve --state %h/.local/state/coffee --listen 127.0.0.1:7077
+# SIGTERM stops the coordinator cleanly; running Beans keep their leases only until they expire (no restart grace).
+Restart=on-failure
+RestartSec=2
+KillMode=mixed
+
+[Install]
+WantedBy=default.target
